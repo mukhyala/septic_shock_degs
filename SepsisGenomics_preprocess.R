@@ -1,19 +1,17 @@
 #Author : Akram Mohammed and Rishikesan Kamaleswaran
-install.packages("magrittr")
-install.packages("dplyr")
-install.packages("AnnotatedDataFrame")
-#install the core bioconductor packages, if not already installed
-source("http://bioconductor.org/biocLite.R")
-biocLite()
-biocLite(BiocUpgrade)
-# install additional bioconductor libraries, if not already installed
-biocLite("GEOquery")
-biocLite("affy")
-biocLite("gcrma")
-biocLite("hgu133plus2cdf")
-biocLite("hgu133plus2probe")
-biocLite("hgu133plus2.db")
+#Author : Kiran Mukhyala and Hector Maya (BINF702)
 
+if (!require("magrittr", quietly = TRUE))
+  install.packages("magrittr")
+if (!require("dplyr", quietly = TRUE))
+  install.packages("dplyr")
+if (!require("AnnotatedDataFrame", quietly = TRUE))
+  install.packages("AnnotatedDataFrame")
+#install the core bioconductor packages, if not already installed
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+# install additional bioconductor libraries, if not already installed
+BiocManager::install(c("GEOquery","affy","gcrma","hgu133plus2cdf","hgu133plus2probe","hgu133plus2.db"))
 library(limma)
 library(magrittr)
 #Load the necessary libraries
@@ -26,20 +24,20 @@ library(hgu133plus2.db)
 library(dplyr)
 library(AnnotationDbi)
 #Set working directory for download
-setwd("C:/Users/amoham18/Documents/SepsisGenomics")
+wd <- getwd()
 
 #Download the CEL file package for this dataset (by GSE - Geo series id)
 getGEOSuppFiles("GSE66099")
 
 #Unpack the CEL files
-setwd("C:/Users/amoham18/Documents/SepsisGenomics/GSE66099")
+setwd(paste(wd,"GSE66099",sep=.Platform$file.sep))
 
 untar("GSE66099_RAW.tar", exdir="data")
-cels = list.files("data/", pattern = "CEL")
-sapply(paste("data", cels, sep="/"), gunzip)
-cels = list.files("data/", pattern = "CEL")
+cels = list.files("data", pattern = "CEL")
+sapply(paste("data", cels, sep=.Platform$file.sep), gunzip)
+cels = list.files("data", pattern = "CEL")
 
-setwd("C:/Users/amoham18/Documents/SepsisGenomics/GSE66099/data")
+setwd(paste(wd,"GSE66099","data",sep=.Platform$file.sep))
 
 pd<-read.AnnotatedDataFrame("SepticShock_ClassLabel_SS.csv",sep=",", header=T)
 
