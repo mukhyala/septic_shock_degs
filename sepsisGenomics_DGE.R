@@ -4,7 +4,8 @@
 
 #Set working directory for download
 
-wd <- getwd()
+wd = "/Users/mukhyala/gmu_phd/classes/702_BiologicalDataAnalysis/septic_shock_degs"
+setwd(paste(wd,"GSE66099","data",sep=.Platform$file.sep))
 library(affy)
 library(limma)
 
@@ -22,7 +23,7 @@ genes= grptab$SYMBOL
 #design <- model.matrix(~ 0+factor(c(data1$Class)))
 design <- model.matrix(~ 0+factor(c(pd$Mortality)))
 colnames(design) <- c("S", "NS")
-contrast.matrix <- makeContrasts(diff=NS-S, levels=design)
+contrast.matrix <- makeContrasts(diff=S-NS, levels=design)
 
 fit <- lmFit(tableSub, design = design) # What should the design be?
 fit2 <- contrasts.fit(fit, contrast.matrix)

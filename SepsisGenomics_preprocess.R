@@ -23,21 +23,24 @@ library(hgu133plus2probe)
 library(hgu133plus2.db)
 library(dplyr)
 library(AnnotationDbi)
-#Set working directory for download
-wd <- getwd()
+
+
+
+
+wd = "/Users/mukhyala/gmu_phd/classes/702_BiologicalDataAnalysis/septic_shock_degs"
 
 #Download the CEL file package for this dataset (by GSE - Geo series id)
-getGEOSuppFiles("GSE66099")
-
+#getGEOSuppFiles("GSE66099")
 #Unpack the CEL files
-setwd(paste(wd,"GSE66099",sep=.Platform$file.sep))
+#setwd(paste(wd,"GSE66099",sep=.Platform$file.sep))
+#untar("GSE66099_RAW.tar", exdir="data")
+setwd(paste(wd,"GSE66099","data",sep=.Platform$file.sep))
 
-untar("GSE66099_RAW.tar", exdir="data")
-cels = list.files("data", pattern = "CEL")
+#cels = list.files("data", pattern = "CEL")
 sapply(paste("data", cels, sep=.Platform$file.sep), gunzip)
 cels = list.files("data", pattern = "CEL")
 
-setwd(paste(wd,"GSE66099","data",sep=.Platform$file.sep))
+
 
 pd<-read.AnnotatedDataFrame("SepticShock_ClassLabel_SS.csv",sep=",", header=T)
 

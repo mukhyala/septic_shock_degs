@@ -23,3 +23,10 @@ stripchart(unlist(tableSub[grep("^CDC20$",genes),]) ~ ssFactor, method="jitter",
 top50 = topTable(fit3, number=50, genelist=genes, adjust.method = "BH", sort.by="p", fc=1.5)
 biomarkers50 = as.matrix(tableSub[genes %in% top50$ID,])
 rownames(biomarkers50) = top50$ID
+
+dge = topTable(fit3, number=50, genelist=genes, adjust.method = "fdr", sort.by="P")
+dTableSub = tableSub[dge$ID,]
+mat = t(scale((dTableSub)))
+rownames(mat)=NULL
+row_ha = rowAnnotation(Mortality=pd$Mortality, Pathogen = pd$Organism.Yes.No, GramPositive=pd$GRAM.POS_yes1_no0,ImmunoSuppression=pd$Immunosuppression, Gender=pd$Gender, InfectionSource=pd$Source.of.infection)
+Heatmap(mat,right_annotation = row_ha)
