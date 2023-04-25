@@ -1,5 +1,6 @@
 library(RColorBrewer)
-
+library(ComplexHeatmap)
+library(EnhancedVolcano)
 
 pd <-read.AnnotatedDataFrame("SepticShock_ClassLabel_SS.csv",sep=",", header=T)
 
@@ -30,3 +31,13 @@ mat = t(scale((dTableSub)))
 rownames(mat)=NULL
 row_ha = rowAnnotation(Mortality=pd$Mortality, Pathogen = pd$Organism.Yes.No, GramPositive=pd$GRAM.POS_yes1_no0,ImmunoSuppression=pd$Immunosuppression, Gender=pd$Gender, InfectionSource=pd$Source.of.infection)
 Heatmap(mat,right_annotation = row_ha)
+
+EnhancedVolcano::EnhancedVolcano(stats_df, 
+                                 lab = stats_df$ID,
+                                 x = "logFC",
+                                 y = "adj.P.Val",
+                                 pCutoff = 0.05, 
+                                 FCcutoff=0.5, 
+                                 ylim=c(0,3.5), 
+                                 xlim=c(-1.5,1.5)
+                                 )
