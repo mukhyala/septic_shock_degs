@@ -30,6 +30,6 @@ fit2 <- contrasts.fit(fit, contrast.matrix)
 options(digits=3)
 fit3 <- eBayes(fit2)
 
-writefile = topTable(fit3, number=Inf, genelist=genes, adjust.method = "fdr", sort.by="logFC")
+writefile = topTable(fit3, number=Inf, genelist=genes, adjust.method = "BH", sort.by="logFC")
 
 write.csv(writefile, file="DEG_Septic_Shock_2_FDR.csv")
