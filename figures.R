@@ -32,6 +32,7 @@ rownames(mat)=NULL
 row_ha = rowAnnotation(Mortality=pd$Mortality, Pathogen = pd$Organism.Yes.No, GramPositive=pd$GRAM.POS_yes1_no0,ImmunoSuppression=pd$Immunosuppression, Gender=pd$Gender, InfectionSource=pd$Source.of.infection)
 Heatmap(mat,right_annotation = row_ha)
 
+stats_df = topTable(fit3, number=1000, genelist=genes, adjust.method = "BH", sort.by="P")
 EnhancedVolcano::EnhancedVolcano(stats_df, 
                                  lab = stats_df$ID,
                                  x = "logFC",
