@@ -36,7 +36,7 @@ wd = "/Users/mukhyala/gmu_phd/classes/702_BiologicalDataAnalysis/septic_shock_de
 #untar("GSE66099_RAW.tar", exdir="data")
 setwd(paste(wd,"GSE66099","data",sep=.Platform$file.sep))
 
-#cels = list.files("data", pattern = "CEL")
+cels = list.files("data", pattern = "CEL")
 sapply(paste("data", cels, sep=.Platform$file.sep), gunzip)
 cels = list.files("data", pattern = "CEL")
 
